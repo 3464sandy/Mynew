@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Little Chapter Of Us ❤️</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;600&family=Georgia&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#080309;
+    --card:#180a13;
+    --border:#563343;
+    --white:#fff8fb;
+    --soft:#cdb6c1;
+    --grey:#907985;
+    --pink:#e84f67;
+    --light-pink:#ff8295;
+    --dark-pink:#762638;
+  }
+
+  *{ box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+
+  html,body{
+    margin:0; padding:0; height:100%;
+    background:#000;
+    display:flex; align-items:center; justify-content:center;
+    font-family:Georgia, 'Times New Roman', serif;
+    overflow:hidden;
+  }
+
+  .phone{
+    position:relative;
+    width:430px; height:760px;
+    max-width:100vw; max-height:100vh;
+    background:var(--bg);
+    overflow:hidden;
+    box-shadow:0 0 60px rgba(0,0,0,.8);
+  }
+
+  /* --- background ambient particles --- */
+  .particle{
+    position:absolute;
+    width:2px; height:2px;
+    border-radius:50%;
+    opacity:.85;
+    animation-name:rise;
+    animation-timing-function:linear;
+    animation-iteration-count:infinite;
+  }
+  @keyframes rise{
+    from{ transform:translateY(0); }
+    to{ transform:translateY(-780px); }
+  }
+
+  /* --- floating hearts --- */
+  .fheart{
+    position:absolute;
+    bottom:-30px;
+    font-family:Arial, sans-serif;
+    font-weight:bold;
+    pointer-events:none;
+    animation-name:floatHeart;
+    animation-timing-function:linear;
+    animation-fill-mode:forwards;
+  }
+  @keyframes floatHeart{
+    from{ transform:translate(0,0); opacity:1; }
+    to{ transform:translate(var(--drift,0px), -820px); opacity:.9; }
+  }
+
+  /* --- progress dots --- */
+  .progress{
+    position:absolute;
+    top:30px; left:0; right:0;
+    text-align:center;
+    letter-spacing:9px;
+    font-family:Arial, sans-serif;
+    font-size:17px;
+    z-index:5;
+  }
+  .progress span{ color:#5a3544; }
+  .progress span.active{ color:var(--pink); }
+
+  /* --- page content area --- */
+  .page{
+    position:absolute;
+    inset:0;
+    z-index:2;
+  }
+
+  .center-text{
+    position:absolute;
+    text-align:center;
+    color:var(--white);
+    white-space:pre-line;
+    line-height:1.3;
+  }
+
+  .glow{
+    position:absolute; left:0; width:100%; text-align:center;
+    font-family:Georgia, serif; font-weight:bold;
+    color:var(--white);
+    text-shadow:
+      0 2px 0 #350b18,
+      0 0 18px rgba(232,79,103,.55),
+      0 0 34px rgba(232,79,103,.35);
+  }
+
+  .card{
+    position:absolute;
+    background:var(--card);
+    border:1px solid var(--border);
+    box-shadow:3px 5px 0 #040204;
+  }
+
+  .btn{
+    position:absolute;
+    left:50%; transform:translateX(-50%);
+    height:44px;
+    background:var(--pink);
+    color:var(--white);
+    border:none;
+    border-radius:2px;
+    font-family:Arial, sans-serif;
+    font-weight:bold;
+    font-size:11pt;
+    cursor:pointer;
+    transition:background .15s ease;
+  }
+  .btn:hover{ background:var(--light-pink); }
+  .btn:active{ transform:translateX(-50%) scale(.97); }
+
+  .btn-outline{
+    background:var(--bg);
+    border:1px solid var(--border);
+  }
+  .btn-outline:hover{ background:var(--card); }
+
+  .footer{
+    position:absolute;
+    left:0; right:0; bottom:0;
+    height:90px;
+    z-index:6;
+    text-align:center;
+    pointer-events:none;
+  }
+  .footer .icon{ font-size:26px; color:var(--white); margin-top:8px; }
+  .footer .handle{
+    font-family:Arial, sans-serif; font-weight:bold; font-size:9pt;
+    color:var(--white); margin-top:6px;
+  }
+  .footer .note{
+    font-family:Arial, sans-serif; font-size:8pt;
+    color:#d7a3b2; margin-top:8px; padding:0 20px;
+  }
+
+  .pwd-input{
+    position:absolute;
+    left:65px; top:300px; width:300px; height:48px;
+    background:#1c1018;
+    color:var(--white);
+    border:1px solid #634251;
+    outline:none;
+    text-align:center;
+    font-family:Arial, sans-serif;
+    font-size:17px;
+    border-radius:2px;
+  }
+  .pwd-input:focus{ border-color:var(--pink); }
+
+  .photo-box{
+    position:absolute;
+    left:35px; width:360px; height:320px;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    overflow:hidden;
+  }
+  .photo-box img{
+    width:100%; height:100%; object-fit:cover;
+  }
+  .photo-box .ph-icon{ font-size:42px; color:var(--pink); }
+  .photo-box .ph-label{
+    font-family:Arial, sans-serif; font-weight:bold; font-size:14px; color:var(--grey); margin-top:14px;
+  }
+  .photo-box .ph-name{
+    font-family:Arial, sans-serif; font-size:10px; color:var(--grey); margin-top:6px;
+  }
+
+  .hindi{ font-family:'Noto Sans Devanagari', sans-serif; }
+
+  .stick{ position:absolute; }
+</style>
+</head>
+<body>
+
+<div class="phone" id="phone">
+  <div id="bgLayer"></div>
+  <div class="page" id="page"></div>
+  <div class="footer" id="footer">
+    <div class="icon">◎</div>
+    <div class="handle">@BHOPALIMITRA</div>
+    <div class="note">👇 Comment "143" &amp; DM me source Code bhai dunga. 🚀</div>
+  </div>
+</div>
+
+<script>
+const WIDTH = 430, HEIGHT = 760;
+const HER_NAME = "Sneha Thorat";
+const YOUR_NAME = "Sandeep Gupta";
+const PASSWORD = "143";
+const PHOTOS = ["photo1.png","photo2.png","photo3.png"];
+
+const page = document.getElementById('page');
+const bgLayer = document.getElementById('bgLayer');
+
+/* ---------- helpers ---------- */
+function clearPage(){ page.innerHTML = ""; }
+
+function el(tag, cls, styles, html){
+  const e = document.createElement(tag);
+  if(cls) e.className = cls;
+  if(styles) Object.assign(e.style, styles);
+  if(html !== undefined) e.innerHTML = html;
+  page.appendChild(e);
+  return e;
+}
+
+function text(x, y, value, size, color="var(--white)", family="Georgia", weight="normal", width=WIDTH){
+  return el('div','center-text',{
+    left: (x - width/2) + 'px',
+    top: (y - size) + 'px',
+    width: width + 'px',
+    color, fontFamily: family, fontWeight: weight, fontSize: size + 'px',
+    fontStyle: weight === 'italic' ? 'italic' : 'normal'
+  }, value);
+}
+
+function glowText(x, y, value, size){
+  el('div','glow',{ top:(y-size*0.7)+'px', fontSize:size+'px' }, value);
+}
+
+function progress(active){
+  const bar = el('div','progress',{top:'22px'});
+  let html = '';
+  for(let i=0;i<8;i++){
+    html += `<span class="${i<active?'active':''}">♡</span>`;
+  }
+  bar.innerHTML = html;
+}
+
+function card(x1,y1,x2,y2){
+  return el('div','card',{
+    left:x1+'px', top:y1+'px', width:(x2-x1)+'px', height:(y2-y1)+'px'
+  });
+}
+
+function button(title, onClick, y, width=220, x=null){
+  const b = document.createElement('button');
+  b.className = 'btn';
+  b.textContent = title;
+  b.style.top = y+'px';
+  b.style.width = width+'px';
+  if(x !== null){ b.style.left = x+'px'; b.style.transform = 'none'; }
+  b.onclick = onClick;
+  page.appendChild(b);
+  return b;
+}
+
+function photoCard(filename, y=120){
+  card(35, y, WIDTH-35, y+320);
+  const box = el('div','photo-box',{ top:y+'px' });
+  const img = document.createElement('img');
+  img.src = filename;
+  img.onerror = () => {
+    box.innerHTML = '';
+    box.innerHTML = `<div class="ph-icon">📷</div><div class="ph-label">YOUR PHOTO</div><div class="ph-name">${filename}</div>`;
+  };
+  box.appendChild(img);
+}
+
+/* ---------- ambient particles ---------- */
+function initParticles(){
+  const colors = ["#ffffff","#6e3144","#8e3e53","#ff7186"];
+  for(let i=0;i<80;i++){
+    const p = document.createElement('div');
+    p.className = 'particle';
+    const x = Math.random()*WIDTH;
+    const dur = (Math.random()*18+10).toFixed(2);
+    const delay = (-Math.random()*dur).toFixed(2);
+    p.style.left = x+'px';
+    p.style.top = Math.random()*HEIGHT+'px';
+    p.style.background = colors[Math.floor(Math.random()*colors.length)];
+    p.style.animationDuration = dur+'s';
+    p.style.animationDelay = delay+'s';
+    bgLayer.appendChild(p);
+  }
+}
+
+function spawnHeart(){
+  const h = document.createElement('div');
+  h.className = 'fheart';
+  const size = Math.random()*12+10;
+  const x = Math.random()*(WIDTH-30)+15;
+  const drift = (Math.random()*80-40).toFixed(1);
+  const dur = (Math.random()*3+2.5).toFixed(2);
+  const colors = ["var(--pink)","var(--light-pink)","#ff9aaa"];
+  h.style.left = x+'px';
+  h.style.fontSize = size+'px';
+  h.style.color = colors[Math.floor(Math.random()*colors.length)];
+  h.style.setProperty('--drift', drift+'px');
+  h.style.animationDuration = dur+'s';
+  h.textContent = '♥';
+  bgLayer.appendChild(h);
+  h.addEventListener('animationend', () => h.remove());
+}
+setInterval(() => { if(Math.random() < .5) spawnHeart(); }, 300);
+
+/* ================= PAGES ================= */
+
+function opening(){
+  clearPage();
+  text(WIDTH/2, 300, "❤️", 55, 'var(--pink)', 'Arial');
+  text(WIDTH/2, 370, "Wait...", 18, 'var(--soft)');
+  text(WIDTH/2, 410, "This one is different.", 22, 'var(--white)', 'Georgia', 'bold');
+  text(WIDTH/2, 450, "For someone special ❤️", 16, 'var(--light-pink)');
+  button("Let's see... ❤️", passwordPage, 520, 220);
+}
+
+function passwordPage(){
+  clearPage();
+  text(WIDTH/2, 70, "🔐", 42, 'var(--white)', 'Arial');
+  text(WIDTH/2, 105, "Before we begin...", 14, 'var(--grey)', 'Georgia');
+  card(35, 120, WIDTH-35, 400);
+  glowText(WIDTH/2, 185, "This little world is", 27);
+  glowText(WIDTH/2, 225, "only for you ❤️", 27);
+  text(WIDTH/2, 270, "Enter the secret password", 14, 'var(--white)');
+
+  const input = document.createElement('input');
+  input.type = 'password';
+  input.className = 'pwd-input';
+  page.appendChild(input);
+  input.focus();
+
+  function unlock(){
+    if(input.value === PASSWORD){
+      welcome();
+    } else {
+      input.value = 'Wrong password';
+      input.style.color = 'var(--pink)';
+      input.type = 'text';
+      setTimeout(() => { input.value = ''; input.style.color='var(--white)'; input.type='password'; }, 700);
+    }
+  }
+  input.addEventListener('keydown', e => { if(e.key === 'Enter') unlock(); });
+  button("Unlock ❤️", unlock, 370, 160);
+}
+
+function welcome(){
+  clearPage();
+  progress(0);
+  text(WIDTH/2, 125, "Welcome, my favorite", 25, 'var(--white)', 'Georgia', 'bold');
+  text(WIDTH/2, 165, "person ❤️", 25, 'var(--pink)', 'Georgia', 'bold');
+  button("Challenge Accepted 👨‍💻❤️", canIAsk, 535, 260);
+}
+
+function canIAsk(){
+  clearPage();
+  progress(1);
+  text(WIDTH/2, 315, "Can I ask you", 25, 'var(--white)', 'Georgia', 'bold');
+  text(WIDTH/2, 350, "something?", 25, 'var(--white)', 'Georgia', 'bold');
+  button("Yes, ask me 🥺", whatIf, 420, 170);
+}
+
+function whatIf(){
+  clearPage();
+  progress(2);
+  card(30, 330, WIDTH-30, 480);
+  text(WIDTH/2, 365, "What if I told you... you're", 17, 'var(--white)', 'Georgia', 'bold');
+  text(WIDTH/2, 400, "one of my favourite reasons", 17, 'var(--white)', 'Georgia', 'bold');
+  text(WIDTH/2, 435, "to smile?", 17, 'var(--white)', 'Georgia', 'bold');
+  button("Awww 🥺", firstQuestion, 500, 150);
+  button("I already knew 😌", firstQuestion, 555, 175);
+}
+
+function firstQuestion(){
+  clearPage();
+  progress(3);
+  card(30, 380, WIDTH-30, 480);
+  text(WIDTH/2, 420, "Do you remember the first", 17, 'var(--white)', 'Georgia', 'bold');
+  text(WIDTH/2, 450, "time we talked?", 17, 'var(--white)', 'Georgia', 'bold');
+  button("❤️ Of course I do", secondQuestion, 510, 170);
+  button("🥺 Maybe remind me...", secondQuestion, 565, 190);
+}
+
+function secondQuestion(){
+  clearPage();
+  progress(4);
+  card(30, 370, WIDTH-30, 485);
+  text(WIDTH/2, 410, "If I could pause one moment", 17, 'var(--white)', 'Georgia', 'bold');
+  text(WIDTH/2, 440, "with you forever... would you let", 17, 'var(--white)', 'Georgia', 'bold');
+  text(WIDTH/2, 470, "me?", 17, 'var(--white)', 'Georgia', 'bold');
+  button("Without thinking ❤️", memoryOne, 525, 190);
+  button("Only if you stay too 🥺", memoryOne, 580, 200);
+}
+
+function memoryOne(){
+  clearPage();
+  progress(5);
+  text(WIDTH/2, 95, "a little chapter of us", 15, 'var(--grey)', 'Georgia');
+  photoCard(PHOTOS[0], 125);
+  text(WIDTH/2, 470, "Some people enter your life quietly...", 12, 'var(--soft)', 'Georgia');
+  text(WIDTH/2, 495, "and somehow become your favourite chapter.", 12, 'var(--soft)', 'Georgia');
+  button("One more memory →", memoryTwo, 540, 190);
+}
+
+function memoryTwo(){
+  clearPage();
+  progress(5);
+  text(WIDTH/2, 95, "a little chapter of us", 15, 'var(--grey)', 'Georgia');
+  photoCard(PHOTOS[1], 125);
+  text(WIDTH/2, 470, "I don't remember what was so funny.", 12, 'var(--soft)', 'Georgia');
+  text(WIDTH/2, 495, "I just remember not wanting it to stop.", 12, 'var(--soft)', 'Georgia');
+  button("One more memory →", memoryThree, 540, 190);
+}
+
+function memoryThree(){
+  clearPage();
+  progress(5);
+  text(WIDTH/2, 95, "a little chapter of us", 15, 'var(--grey)', 'Georgia');
+  photoCard(PHOTOS[2], 125);
+  text(WIDTH/2, 470, "Ordinary evenings, made unreasonably good,", 11, 'var(--soft)', 'Georgia');
+  text(WIDTH/2, 495, "just because you were there.", 11, 'var(--soft)', 'Georgia');
+  button("One more memory →", shayariOne, 540, 190);
+}
+
+function shayariOne(){
+  clearPage();
+  progress(5);
+  text(WIDTH/2, 330, "for you, in my own words", 16, 'var(--soft)', 'Georgia');
+  text(WIDTH/2, 390, "तुमसे मोहब्बत करना", 21, 'var(--white)', "'Noto Sans Devanagari'");
+  text(WIDTH/2, 430, "शायद मेरी ज़िंदगी का", 21, 'var(--white)', "'Noto Sans Devanagari'");
+  text(WIDTH/2, 470, "सबसे खूबसूरत इत्तेफ़ाक़ था...", 19, 'var(--white)', "'Noto Sans Devanagari'");
+  text(WIDTH/2, 520, "और तुम्हारे साथ रहना", 19, 'var(--white)', "'Noto Sans Devanagari'");
+  text(WIDTH/2, 560, "अब मेरी सबसे प्यारी आदत है।", 19, 'var(--white)', "'Noto Sans Devanagari'");
+  button("आगे बढ़ें →", shayariTwo, 620, 150);
+}
+
+function shayariTwo(){
+  clearPage();
+  progress(5);
+  text(WIDTH/2, 300, "for you, in my own words", 16, 'var(--soft)', 'Georgia');
+  text(WIDTH/2, 360, "मैं वादे बहुत बड़े नहीं करूँगा,", 19, 'var(--white)', "'Noto Sans Devanagari'");
+  text(WIDTH/2, 405, "बस इतना चाहता हूँ...", 20, 'var(--white)', "'Noto Sans Devanagari'");
+  text(WIDTH/2, 460, "जब दुनिया थोड़ी मुश्किल लगे,", 19, 'var(--white)', "'Noto Sans Devanagari'");
+  text(WIDTH/2, 505, "तुम मेरे पास बैठ जाना।", 19, 'var(--white)', "'Noto Sans Devanagari'");
+  text(WIDTH/2, 550, "बाकी सब मैं संभाल लूँगा।", 19, 'var(--white)', "'Noto Sans Devanagari'");
+  button("Next", lastQuestion, 620, 150);
+}
+
+function lastQuestion(){
+  clearPage();
+  progress(6);
+  text(WIDTH/2, 335, "❤️", 60, '#ff553e', 'Arial');
+  text(WIDTH/2, 410, "Okay... one last question.", 16, 'var(--soft)', 'Georgia');
+  text(WIDTH/2, 455, "And this one actually matters.", 16, 'var(--soft)', 'Georgia');
+  setTimeout(proposal, 1200);
+}
+
+function proposal(){
+  clearPage();
+  progress(6);
+  text(WIDTH/2, 300, "❤️", 58, '#ff553e', 'Arial');
+  text(WIDTH/2, 400, "Will you be my person?", 29, 'var(--white)', 'Georgia', 'bold');
+  button("❤️ YES", iLoveYou, 480, 140, 70);
+  const b2 = button("Obviously 🥺", iLoveYou, 480, 140, 220);
+  b2.classList.add('btn-outline');
+}
+
+function iLoveYou(){
+  clearPage();
+  progress(7);
+  text(WIDTH/2, 330, "♥", 35, 'var(--pink)', 'Arial');
+  text(WIDTH/2, 385, "I LOVE YOU. 🤍", 28, 'var(--white)', 'Georgia', 'bold');
+  text(WIDTH/2, 430, "Today. Tomorrow.", 15, 'var(--soft)', 'Georgia');
+  text(WIDTH/2, 455, "And in all the ordinary little moments", 13, 'var(--soft)', 'Georgia');
+  text(WIDTH/2, 480, "in between.", 13, 'var(--soft)', 'Georgia');
+  text(WIDTH/2, 525, "Will you keep choosing me?", 16, 'var(--white)', 'Georgia', 'italic');
+  button("YES, ALWAYS ❤️", couplePage, 570, 190);
+}
+
+function drawPerson(x, y, female=false){
+  const svgns = "http://www.w3.org/2000/svg";
+  let svg = document.getElementById('stickSvg');
+  if(!svg){
+    svg = document.createElementNS(svgns,'svg');
+    svg.setAttribute('id','stickSvg');
+    svg.setAttribute('width', WIDTH);
+    svg.setAttribute('height', HEIGHT);
+    svg.style.position='absolute'; svg.style.left='0'; svg.style.top='0';
+    page.appendChild(svg);
+  }
+  const color = "#f4f1f2";
+  function line(x1,y1,x2,y2){
+    const l = document.createElementNS(svgns,'line');
+    l.setAttribute('x1',x1); l.setAttribute('y1',y1);
+    l.setAttribute('x2',x2); l.setAttribute('y2',y2);
+    l.setAttribute('stroke', color); l.setAttribute('stroke-width', 4);
+    l.setAttribute('stroke-linecap','round');
+    svg.appendChild(l);
+  }
+  const head = document.createElementNS(svgns,'circle');
+  head.setAttribute('cx', x); head.setAttribute('cy', y-27);
+  head.setAttribute('r', 8); head.setAttribute('fill', color);
+  svg.appendChild(head);
+  line(x, y-19, x, y+18);
+  line(x, y-8, x-15, y+4);
+  line(x, y-8, x+15, y+4);
+  line(x, y+18, x-11, y+40);
+  line(x, y+18, x+11, y+40);
+}
+
+function couplePage(){
+  clearPage();
+  progress(7);
+  text(WIDTH/2, 125, "you & me.", 18, 'var(--soft)', 'Georgia', 'italic');
+  drawPerson(175, 430);
+  drawPerson(255, 430, true);
+  text(WIDTH/2, 520, "and... she said yes ❤️", 17, 'var(--white)', 'Georgia', 'bold');
+  button("Continue →", stuckPage, 570, 160);
+}
+
+function stuckPage(){
+  clearPage();
+  progress(8);
+  card(25, 285, WIDTH-25, 545);
+  text(WIDTH/2, 325, "There's no world.", 15, 'var(--soft)', 'Georgia', 'italic');
+  text(WIDTH/2, 380, "You're stuck with", 25, 'var(--white)', 'Georgia', 'bold');
+  text(WIDTH/2, 420, "me. ❤️", 25, 'var(--white)', 'Georgia', 'bold');
+  text(WIDTH/2, 470, "No refunds.", 14, 'var(--soft)');
+  text(WIDTH/2, 495, "No cancellations.", 14, 'var(--soft)');
+  text(WIDTH/2, 520, "Lifetime subscription. ❤️", 14, 'var(--light-pink)');
+  text(WIDTH/2, 565, "Thank you for being my favourite part of", 11, 'var(--soft)', 'Georgia', 'italic');
+  text(WIDTH/2, 585, "this life.", 11, 'var(--soft)', 'Georgia', 'italic');
+}
+
+/* ---------- boot ---------- */
+initParticles();
+opening();
+</script>
+</body>
+</html>
